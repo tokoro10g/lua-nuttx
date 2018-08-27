@@ -8,7 +8,11 @@
 
 #include "lprefix.h"
 
+#ifdef CONFIG_ARCH_CHIP_CXD56XX
 #include <sdk/config.h>
+#else
+#include <nuttx/config.h>
+#endif
 
 #include <signal.h>
 #include <stdio.h>
