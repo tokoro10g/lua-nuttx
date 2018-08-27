@@ -17,6 +17,7 @@ Required configs:
 * `CONFIG_LIBC_LOCALE=y`
 * `CONFIG_TIME_EXTENDED=y`
 * `CONFIG_LIBM=y`
+* `CONFIG_FS_TMPFS=y`
 
 Optional features:
 * `os.tmpname` and `io.tmpfile` requires `/tmp` mountpoint
