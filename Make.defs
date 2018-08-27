@@ -1,0 +1,4 @@
+
+ifeq ($(CONFIG_MYAPPS_LUA),y)
+CONFIGURED_APPS += lua
+endif

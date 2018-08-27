@@ -1,0 +1,16 @@
+diff --git a/sdk/system/readline/readline_common.c b/sdk/system/readline/readline_common.c
+index d427b8d..a7c3b96 100644
+--- a/sdk/system/readline/readline_common.c
++++ b/sdk/system/readline/readline_common.c
+@@ -732,5 +732,11 @@ ssize_t readline_common(FAR struct rl_common_s *vtbl, FAR char *buf, int buflen)
+           tab_completion(vtbl, buf, buflen, &nch);
+         }
+ #endif
++     else if (ch == 0x04) /* Ctrl-D */
++        {
++          buf[0] = '\0';
++          RL_PUTC(vtbl, '\n');
++          return 0;
++        }
+     }
+ }

@@ -8,6 +8,7 @@
 
 #include "lprefix.h"
 
+#include <sdk/config.h>
 
 #include <signal.h>
 #include <stdio.h>
@@ -84,6 +85,13 @@
 #define lua_readline(L,b,p)	((void)L, ((b)=readline(p)) != NULL)
 #define lua_saveline(L,line)	((void)L, add_history(line))
 #define lua_freeline(L,b)	((void)L, free(b))
+
+#elif defined(CONFIG_SYSTEM_READLINE)	/* { */
+
+#include "system/readline.h"
+#define lua_readline(L,b,p)	((void)L, fputs(p, stdout), fflush(stdout), readline(b,LUA_MAXINPUT,stdin,stdout) )
+#define lua_saveline(L,line)	{ (void)L; (void)line; }
+#define lua_freeline(L,b)	{ (void)L; (void)b; }
 
 #else				/* }{ */
 
@@ -593,7 +601,12 @@ static int pmain (lua_State *L) {
 }
 
 
-int main (int argc, char **argv) {
+#ifdef CONFIG_BUILD_KERNEL
+int main (int argc, char **argv)
+#else
+int lua_main(int argc, char *argv[])
+#endif
+{
   int status, result;
   lua_State *L = luaL_newstate();  /* create state */
   if (L == NULL) {
